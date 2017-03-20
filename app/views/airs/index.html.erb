@@ -1,0 +1,50 @@
+<script src="//cdn.bootcss.com/Chart.js/2.5.0/Chart.bundle.js"></script>
+
+<section id="chart">
+  <% @airs.each do |air| %>
+
+  <canvas id="myChart" width="400" height="400"></canvas>
+  <script>
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ["PM2.5", "AOI", "PM10"],
+          datasets: [{
+              label: 'Air Chart',
+              data: [<%= air.pm_two_five %>, <%= air.aqi %>, <%= air.pm_ten %>],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+  </script>
+
+  <div class="text-center">
+    <%= link_to "更新", update_air_air_path(air), :method => :post, class: "btn btn-info" %>
+    <%= air.city %>
+    <%= air.quality %>
+    <%= air.time %>
+  </div>
+
+  <% end %>
+
+</section>
